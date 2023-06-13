@@ -1,38 +1,59 @@
-# create-svelte
+# lemmik
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Installation
 
-## Creating a project
+Lemmik can run in two modes:
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Node server mode**, which will work JS-less for logged out browsing, but
+  requires a VPS to host. It's mainly intended for instances to install as a
+  replacement for/additional choice next to the default Lemmy frontend.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+  This mode can additionally be "locked down" into a specific instance.
 
-# create a new project in my-app
-npm create svelte@latest my-app
+- **Single page application mode**, which _requires_ JS for everything, however
+  it can be hosted almost everywhere you can think of, often for free.
+
+  This mode has no logged out browsing capabilities.
+
+In both cases, logged in browsing _requires_ JS, simply because I do not want to
+bother with trusting anybody but the visitor's own browser with their token.
+
+### Preparation
+
+```sh
+$ git clone https://github.com/ShittyKopper/lemmik
+$ cd lemmik
+$ npm ci
 ```
 
-## Developing
+### Node server mode
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+```sh
+$ npm run build:node
+# The built site will be output at ./build/
 ```
 
-## Building
+The resulting output requires node 18.11 or greater (via
+`--experimental-global-webcrypto` argument) to run (node 20 or greater does not
+need any extra flags). If you can't install that, use the `VITE_NODE_POLYFILL=1`
+environment variable to enable polyfills for older node versions.
 
-To create a production version of your app:
+The node server is configured via environment variables. See `.env.example` for
+more information. Note that dotenv files are NOT loaded by default. You'll need
+to load them yourself, or use a different method of getting environment variables
+into the application.
 
-```bash
-npm run build
+### SPA mode
+
+```sh
+# copy .env.example over to .env and edit all UI_ variables to your liking. they
+# will be "baked in" the output.
+
+$ npm run build:spa
+# The built site will be output at ./build/
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+This requires a host that will attempt to rewrite all failed requests to
+`index.html` for fancy URLs. Certain hosts use different files for that (`200.html`
+seems like a common one) If you know your host uses a different file than
+`index.html`, use the environment variable `VITE_SPA_FALLBACK` to specify it.
