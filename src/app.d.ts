@@ -7,9 +7,12 @@ export interface ThemePref {
 }
 
 interface SessionData {
-	accounts: {
-		lemmyJwt?: string;
-	}[];
+	// let's not put the lemmy jwt here. if we keep it in, say, localStorage
+	// we'll force ourselves to only render authorized pages browserside, meaning
+	// the server doesn't have to care about the privacy implications of having
+	// access to the user's token.
+
+	// logged out pages can still be rendered serverside for JS-less browsing
 
 	prefs: {
 		language?: string;
