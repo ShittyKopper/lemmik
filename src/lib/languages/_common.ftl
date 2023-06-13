@@ -1,0 +1,1 @@
+# Common definitions included in all languages.
