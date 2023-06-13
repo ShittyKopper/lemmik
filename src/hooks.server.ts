@@ -1,10 +1,11 @@
 import { env as publicEnv } from "$env/dynamic/public";
+import { VITE_BUILD_MODE } from "$env/static/private";
 import { negotiate } from "$lib/languages/main";
-import type { Handle } from "@sveltejs/kit";
+import { boolEnv } from "$lib/util";
+import type { Handle, HandleFetch } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import AcceptLanguageParser from "accept-language-parser";
 import type { Prefs, ThemePref } from "./app";
-import { boolEnv } from "$lib/util";
 
 const PREFS_COOKIE = "lemmik_prefs";
 
@@ -80,3 +81,10 @@ const theme = (({ event, resolve }) => {
 }) satisfies Handle;
 
 export const handle = sequence(language, theme);
+
+export const handleFetch = (async ({ request, fetch }) => {
+	if (VITE_BUILD_MODE == "spa")
+		throw new Error("SPA build attempted fetch(). Stop trying to make fetch happen.");
+
+	return fetch(request);
+}) satisfies HandleFetch;
