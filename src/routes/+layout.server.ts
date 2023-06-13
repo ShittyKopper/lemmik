@@ -6,7 +6,6 @@ export const trailingSlash = VITE_BUILD_MODE == "spa" ? "always" : "ignore";
 
 export const load = (({ locals }) => {
 	return {
-		session: locals.session.data,
-		current: locals.current,
+		prefs: locals.prefs,
 	};
 }) satisfies LayoutServerLoad;

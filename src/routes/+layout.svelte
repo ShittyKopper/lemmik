@@ -2,7 +2,7 @@
 	import "../app.css";
 
 	import { browser } from "$app/environment";
-	import { bundleOf } from "$lib/languages/main";
+	import { bundleOf, negotiate } from "$lib/languages/main";
 	import { FluentProvider } from "@nubolab-ffwd/svelte-fluent";
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
@@ -24,11 +24,12 @@
 			: false,
 	);
 
-	$: darkModeChoice =
-		data.session.prefs?.theme?.dark != undefined ? data.session.prefs.theme.dark : null;
-
+	$: darkModeChoice = data.prefs?.theme?.dark != undefined ? data.prefs.theme.dark : null;
 	$: darkMode = darkModeChoice == null ? $darkModeDefault : darkModeChoice;
 	$: if (browser) document.body.classList.toggle("--dark", darkMode);
+
+	$: language =
+		data.prefs.language || browser ? negotiate(navigator.languages) : env.UI_DEFAULT_LANGUAGE;
 
 	onMount(() => {
 		if (!autoDarkMode) return;
@@ -39,7 +40,7 @@
 	});
 </script>
 
-<FluentProvider bundles={[bundleOf(data.current.language)]}>
+<FluentProvider bundles={[bundleOf(language)]}>
 	<Navbar />
 
 	<div id="content" class:--full-width={fullWidth} tabindex="-1">

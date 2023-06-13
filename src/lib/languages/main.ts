@@ -23,7 +23,7 @@ export function bundleOf(language: string) {
 	return bundle;
 }
 
-export function negotiate(languages: string[]) {
+export function negotiate(languages: readonly string[]) {
 	const negotiated = negotiateLanguages(languages, SUPPORTED_LANGUAGES, {
 		defaultLocale: env.UI_DEFAULT_LANGUAGE,
 		strategy: "lookup",
