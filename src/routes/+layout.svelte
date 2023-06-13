@@ -29,7 +29,7 @@
 	$: if (browser) document.body.classList.toggle("--dark", darkMode);
 
 	$: language =
-		data.prefs.language || browser ? negotiate(navigator.languages) : env.UI_DEFAULT_LANGUAGE;
+		data.prefs.language || (browser ? negotiate(navigator.languages) : env.UI_DEFAULT_LANGUAGE);
 
 	onMount(() => {
 		if (!autoDarkMode) return;

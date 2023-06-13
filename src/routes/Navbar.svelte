@@ -17,7 +17,7 @@
 		class="mx-auto grid h-16 w-full max-w-screen-2xl grid-cols-12 items-center gap-2 px-4 text-lg [:global(--full-width)_&]:max-w-none"
 	>
 		<NavbarSection className="text-xl col-span-3" links={{ "/": "Instance Name" }} />
-		<form class="col-span-6 m-auto w-full max-w-screen-md">
+		<div class="col-span-6 m-auto w-full max-w-screen-md">
 			<input
 				type="search"
 				name="q"
@@ -25,7 +25,7 @@
 				placeholder="@!community@example.com"
 				class="w-full border border-neutral-300 bg-neutral-100 px-3 py-2 hover:bg-neutral-200 focus:bg-neutral-200 dark:border-neutral-600 dark:bg-neutral-800 hover:dark:bg-neutral-700 focus:dark:bg-neutral-700"
 			/>
-		</form>
+		</div>
 		<NavbarSection
 			className="justify-end col-span-3"
 			links={{ "/login": $localize("navbar-login"), "/settings": $localize("navbar-settings") }}

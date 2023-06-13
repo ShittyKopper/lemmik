@@ -10,9 +10,14 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
 	plugins: [svelteFluent(), sveltekit()],
+
 	css: {
 		postcss: {
 			plugins: [tailwindcssNesting(postcssNesting), tailwindcss, autoprefixer],
 		},
+	},
+
+	build: {
+		sourcemap: true,
 	},
 });
