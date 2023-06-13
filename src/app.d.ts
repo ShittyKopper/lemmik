@@ -14,6 +14,7 @@ interface SessionData {
 	prefs: {
 		language?: string;
 		theme?: ThemePref;
+		avatarsEnabled?: boolean;
 	};
 }
 

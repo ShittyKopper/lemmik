@@ -17,20 +17,23 @@ function makeVariant(variant, name) {
 /** @type {import('tailwindcss').Config} */
 export default {
 	content: ["./src/**/*.{html,js,svelte,ts}"],
-	darkMode: ["class", "body.--dark"],
+	darkMode: ["class", ".--dark"],
+	theme: {
+		colors: {
+			transparent: colors.transparent,
+			white: colors.white,
+			black: colors.black,
+
+			warning: colors.amber,
+			error: colors.red,
+			success: colors.lime,
+		},
+	},
 	plugins: [
 		require("tailwindcss-themer")({
 			defaultTheme: {
 				extend: {
 					colors: {
-						transparent: colors.transparent,
-						white: colors.white,
-						black: colors.black,
-
-						warning: colors.amber,
-						error: colors.red,
-						success: colors.lime,
-
 						// there needs to be some value for these, otherwise it
 						// doesn't generate CSS vars. probably because we dynamically
 						// generate the class names LUL

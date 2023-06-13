@@ -1,8 +1,19 @@
 <script lang="ts">
-	import { Localized } from "@nubolab-ffwd/svelte-fluent";
+	import PostRiver from "$lib/components/PostRiver.svelte";
 </script>
 
-<h1 class="text-primary-500"><Localized id="hello" /></h1>
-<p>
-	Visit <a href="https://kit.svelte.dev" class="text-warning-500">kit.svelte.dev</a> to read the documentation
-</p>
+<div
+	class="mx-auto grid max-w-screen-2xl grid-cols-12 gap-2 px-4 py-2 [.--full-width_&]:max-w-none"
+>
+	<main
+		class="col-span-9 border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-neutral-950"
+	>
+		<PostRiver />
+	</main>
+
+	<aside
+		class="col-span-3 border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-neutral-950"
+	>
+		.
+	</aside>
+</div>

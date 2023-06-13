@@ -7,11 +7,21 @@
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import type { LayoutData } from "./$types";
+	import Navbar from "./Navbar.svelte";
+	import { env } from "$env/dynamic/public";
+	import { boolEnv } from "$lib/util";
 
 	export let data: LayoutData;
 
+	const autoDarkMode = boolEnv(env.UI_DEFAULT_THEME_DARK_AUTO);
+	const fullWidth = false;
+
 	const darkModeDefault = writable(
-		browser ? window.matchMedia("(prefers-color-scheme: dark)").matches : false,
+		autoDarkMode
+			? browser
+				? window.matchMedia("(prefers-color-scheme: dark)").matches
+				: false
+			: false,
 	);
 
 	$: darkModeChoice =
@@ -21,6 +31,8 @@
 	$: if (browser) document.body.classList.toggle("--dark", darkMode);
 
 	onMount(() => {
+		if (!autoDarkMode) return;
+
 		window
 			.matchMedia("(prefers-color-scheme: dark)")
 			.addEventListener("change", (m) => darkModeDefault.set(m.matches));
@@ -28,14 +40,9 @@
 </script>
 
 <FluentProvider bundles={[bundleOf(data.current.language)]}>
-	<slot />
+	<Navbar />
+
+	<div id="content" class:--full-width={fullWidth} tabindex="-1">
+		<slot />
+	</div>
 </FluentProvider>
-
-<style lang="postcss">
-	:global(body) {
-		@apply h-full;
-
-		@apply bg-neutral-50 text-neutral-900;
-		@apply dark:bg-neutral-800 dark:text-neutral-50;
-	}
-</style>

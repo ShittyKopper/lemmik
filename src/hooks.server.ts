@@ -1,10 +1,10 @@
-import { negotiate } from "$lib/languages/main";
-import AcceptLanguageParser from "accept-language-parser";
 import { env as privateEnv } from "$env/dynamic/private";
 import { env as publicEnv } from "$env/dynamic/public";
-import { handleSession } from "svelte-kit-cookie-session";
-import { sequence } from "@sveltejs/kit/hooks";
+import { negotiate } from "$lib/languages/main";
 import type { Handle } from "@sveltejs/kit";
+import { sequence } from "@sveltejs/kit/hooks";
+import AcceptLanguageParser from "accept-language-parser";
+import { handleSession } from "svelte-kit-cookie-session";
 import type { ThemePref } from "./app";
 
 const session = handleSession({
