@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Localized, localize } from "@nubolab-ffwd/svelte-fluent";
-	import NavbarSection from "./NavbarSection.svelte";
+	import NavbarSection from "./(app)/NavbarSection.svelte";
 
 	let searchQuery: string;
 </script>

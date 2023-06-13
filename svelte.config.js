@@ -28,13 +28,6 @@ const config = {
 					: process.env.BUILD_BASE_PATH,
 		},
 
-		prerender:
-			process.env.VITE_BUILD_MODE == "spa"
-				? {
-						entries: [],
-				  }
-				: {},
-
 		env: {
 			publicPrefix: "UI_",
 		},
