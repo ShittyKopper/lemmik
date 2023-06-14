@@ -1,6 +1,6 @@
 import { env } from "$env/dynamic/public";
 import { Lemmy } from "$lib/lemmy";
-import type { Fetch } from "../app";
+import type { Fetch } from "../../app";
 
 export function loadData(fetch: Fetch) {
 	const lemmy = new Lemmy(env.UI_DEFAULT_INSTANCE, { fetch });

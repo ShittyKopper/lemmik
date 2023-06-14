@@ -4,6 +4,10 @@
 	import { UI_BUILD_MODE } from "$env/static/public";
 	import type { AccountContext } from "$lib/stores/accounts";
 	import { getContext, onMount } from "svelte";
+	import type { LayoutData } from "./$types";
+	import Navbar from "./Navbar.svelte";
+
+	export let data: LayoutData;
 
 	const { currentAccount } = getContext<AccountContext>("accounts");
 
@@ -17,5 +21,13 @@
 </script>
 
 {#if !(UI_BUILD_MODE == "spa" && $currentAccount == null)}
-	<slot />
+	<Navbar site={data?.site.site_view.site} />
+
+	<div
+		id="content"
+		class="mx-auto grid w-full max-w-screen-2xl grid-cols-12 gap-2 px-4 py-2 --full-width:max-w-none"
+		tabindex="-1"
+	>
+		<slot />
+	</div>
 {/if}

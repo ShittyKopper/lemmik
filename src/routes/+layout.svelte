@@ -4,6 +4,7 @@
 	import { browser } from "$app/environment";
 	import { env } from "$env/dynamic/public";
 	import { bundleOf, negotiate } from "$lib/languages/main";
+	import { Lemmy } from "$lib/lemmy";
 	import { loadAccounts, type Account, type AccountContext } from "$lib/stores/accounts";
 	import { loadPrefs, type Prefs } from "$lib/stores/prefs";
 	import { boolEnv } from "$lib/util";
@@ -11,8 +12,6 @@
 	import { onMount, setContext } from "svelte";
 	import { derived, writable } from "svelte/store";
 	import type { LayoutData } from "./$types";
-	import Navbar from "./Navbar.svelte";
-	import { Lemmy } from "$lib/lemmy";
 
 	export let data: LayoutData;
 
@@ -80,15 +79,7 @@
 		class="h-full min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50 dark:[color-scheme:only_dark]"
 	>
 		<FluentProvider bundles={[bundleOf(language)]}>
-			<Navbar site={data?.site.site_view.site} />
-
-			<div
-				id="content"
-				class="mx-auto grid w-full max-w-screen-2xl grid-cols-12 gap-2 px-4 py-2 --full-width:max-w-none"
-				tabindex="-1"
-			>
-				<slot />
-			</div>
+			<slot />
 		</FluentProvider>
 	</div>
 </div>

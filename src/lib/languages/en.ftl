@@ -16,7 +16,7 @@ postriver-item-downvote = { $voted ->
 }
 
 postriver-item-byline =
-    submitted <span data-l10n-name="time">{$time}</span> ago
+    <span data-l10n-name="time">{$time}</span> ago
     by <a data-l10n-name="user">{$user}</a>
     to <a data-l10n-name="community">{$community}</a>
 

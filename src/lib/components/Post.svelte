@@ -39,7 +39,7 @@
 				<a
 					data-l10n-name="user"
 					href="/u/test"
-					class="text-primary-700 dark:text-primary-400"
+					class="whitespace-nowrap text-primary-700 dark:text-primary-400"
 					style="--avatar:url(https://placehold.co/96x96);"
 				>
 					<!--localized-->
@@ -47,7 +47,7 @@
 				<a
 					data-l10n-name="community"
 					href="/c/test"
-					class="text-primary-700 dark:text-primary-400"
+					class="whitespace-nowrap text-primary-700 dark:text-primary-400"
 					style="--avatar:url(https://placehold.co/96x96);"><!--localized--></a
 				>
 			</Overlay>

@@ -7,6 +7,7 @@ export const DEFAULT_PREFS = {
 
 	avatarsEnabled: true,
 	fullWidth: false,
+	icons: true,
 };
 
 export const PREFS_STORAGE_KEY = "lemmik_prefs";
@@ -23,6 +24,7 @@ export interface Prefs {
 
 	avatarsEnabled?: boolean;
 	fullWidth?: boolean;
+	icons?: boolean;
 }
 
 export function loadPrefs(store: Writable<Prefs | null>) {
