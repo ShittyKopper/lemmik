@@ -39,9 +39,13 @@ need any extra flags). If you can't install that, use the `VITE_NODE_POLYFILL=1`
 environment variable to enable polyfills for older node versions.
 
 The node server is configured via environment variables. See `.env.example` for
-more information. Note that dotenv files are NOT loaded by default. You'll need
-to load them yourself, or use a different method of getting environment variables
-into the application.
+more information. Note that dotenv files are NOT loaded by default. If you do not
+have any other way of getting environment variables in, you can start the server
+like so:
+
+```sh
+$ node -r dotenv/config build/index.js
+```
 
 ### SPA mode
 

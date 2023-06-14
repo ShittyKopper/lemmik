@@ -11,8 +11,7 @@ if (process.env.VITE_BUILD_MODE == "node")
 	});
 else if (process.env.VITE_BUILD_MODE == "spa")
 	adapter = staticAdapter({ fallback: process.env.VITE_SPA_FALLBACK || "index.html" });
-else
-	console.warn("lemmik: Missing or invalid env variable VITE_BUILD_MODE. must be 'node' or 'spa'");
+else console.warn("Missing or invalid env variable VITE_BUILD_MODE. must be 'node' or 'spa'");
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -32,25 +31,29 @@ const config = {
 			publicPrefix: "UI_",
 		},
 
-		csp: {
-			directives: {
-				"default-src": ["none"],
-				"script-src": ["self"],
-				"style-src": ["self"],
+		...(process.env.NODE_ENV != "development"
+			? {
+					csp: {
+						directives: {
+							"default-src": ["none"],
+							"script-src": ["self"],
+							"style-src": ["self"],
 
-				// allow images and video from anywhere
-				"img-src": ["self", "https:"],
-				"media-src": ["self", "https:"],
+							// allow images and video from anywhere
+							"img-src": ["self", "https:"],
+							"media-src": ["self", "https:"],
 
-				// allow fetch() to any lemmy instance
-				"connect-src": ["self", "https:"],
+							// allow fetch() to any instance
+							"connect-src": ["self", "https:"],
 
-				// maybe relaxable for embedding later on
-				// "object-src": ["none"],
-				// "frame-src": ["none"],
-				// "child-src": ["none"],
-			},
-		},
+							// maybe relaxable for embedding later on
+							// "object-src": ["none"],
+							// "frame-src": ["none"],
+							// "child-src": ["none"],
+						},
+					},
+			  }
+			: {}),
 	},
 };
 

@@ -1,6 +1,8 @@
 import { env } from "$env/dynamic/public";
+import type { Prefs } from "$lib/stores/prefs";
 import { FluentBundle, FluentResource } from "@fluent/bundle";
 import { negotiateLanguages } from "@fluent/langneg";
+import AcceptLanguageParser from "accept-language-parser";
 
 // Register new languages here
 // vvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -29,5 +31,20 @@ export function negotiate(languages: readonly string[]) {
 		strategy: "lookup",
 	});
 
-	return negotiated[0] || env.UI_DEFAULT_LANGUAGE;
+	return negotiated[0];
+}
+
+export function loadFromRequest(prefs: Prefs, request: Request) {
+	let language: string;
+	if (prefs && prefs.language) {
+		language = prefs.language;
+	} else {
+		const acceptedLanguages = AcceptLanguageParser.parse(
+			request.headers.get("accept-language") || undefined,
+		).map((alp) => alp.code);
+
+		language = negotiate(acceptedLanguages);
+	}
+
+	return language;
 }

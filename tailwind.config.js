@@ -1,23 +1,24 @@
 /* eslint-disable */
 
 const colors = require("tailwindcss/colors");
+const plugin = require("tailwindcss/plugin");
 
-function makeVariant(variant, name) {
-	return {
-		name: `${variant}-${name}`,
-		selectors: [`body.--${variant}-${name}`],
-		extend: {
-			colors: {
-				[variant]: colors[name],
-			},
-		},
-	};
-}
+// https://tailwindcss.com/docs/customizing-colors#default-color-palette
+const THEMES = {
+	primary: ["rose", "emerald", "sky", "purple"],
+	neutral: ["slate", "zinc", "stone"],
+};
 
 /** @type {import('tailwindcss').Config} */
 export default {
 	content: ["./src/**/*.{html,js,svelte,ts}"],
-	darkMode: ["class", ".--dark"],
+	safelist: [
+		...THEMES.primary.map((theme) => `--primary-${theme}`),
+		...THEMES.neutral.map((theme) => `--neutral-${theme}`),
+	],
+
+	darkMode: ["class", "#app.--dark"],
+
 	theme: {
 		colors: {
 			transparent: colors.transparent,
@@ -29,29 +30,31 @@ export default {
 			success: colors.lime,
 		},
 	},
+
 	plugins: [
+		plugin(function ({ addVariant }) {
+			addVariant("--full-width", "#app.--full-width &");
+		}),
+
+		require("@tailwindcss/forms"),
+		require("@tailwindcss/typography"),
 		require("tailwindcss-themer")({
-			defaultTheme: {
-				extend: {
-					colors: {
-						// there needs to be some value for these, otherwise it
-						// doesn't generate CSS vars. probably because we dynamically
-						// generate the class names LUL
-						// see src/hooks.server.ts for another terrible hack, free of charge
-
-						// hardcoded sky and slate as defaults.
-						primary: colors.sky,
-						neutral: colors.slate,
-					},
-				},
-			},
 			themes: [
-				makeVariant("primary", "rose"),
-				makeVariant("primary", "emerald"),
-				makeVariant("primary", "purple"),
-
-				makeVariant("neutral", "stone"),
+				...THEMES.primary.map((theme) => makeVariant("primary", theme)),
+				...THEMES.neutral.map((theme) => makeVariant("neutral", theme)),
 			],
 		}),
 	],
 };
+
+function makeVariant(variant, name) {
+	return {
+		name: `${variant}-${name}`,
+		selectors: [`#app.--${variant}-${name}`],
+		extend: {
+			colors: {
+				[variant]: colors[name],
+			},
+		},
+	};
+}

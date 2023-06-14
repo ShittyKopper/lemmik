@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* also see tailwind.config.js */
+
+@layer components {
+	.lm-box {
+		@apply p-2;
+		@apply border border-neutral-300 bg-white;
+		@apply dark:border-neutral-700 dark:bg-neutral-950;
+	}
+}
+
+@layer utilities {
+	.--warning {
+		@apply border-warning-400 bg-warning-200 text-warning-950;
+		@apply dark:border-warning-700 dark:bg-warning-800 dark:text-warning-200;
+	}
+}

@@ -5,7 +5,7 @@
 </script>
 
 <article
-	class="flex h-24 flex-row gap-x-4 border-b border-neutral-300 p-2 last:border-0 even:bg-neutral-50 dark:border-neutral-700 dark:even:bg-neutral-900"
+	class="lm-box flex h-24 flex-row gap-x-4 border-b border-l-0 border-r-0 border-t-0 last:border-0 even:bg-neutral-50 dark:even:bg-neutral-900"
 >
 	<div class="grid w-10 grid-rows-3 justify-items-center">
 		<button title={$localize("postriver-item-upvote", { voted: "false" })}>

@@ -1,19 +1,13 @@
 <!DOCTYPE html>
-<html lang="%app.lang%" class="h-full">
+<html lang="%app.lang%">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
 	</head>
-	<body
-		data-sveltekit-preload-data="hover"
-		class="%app.theme.primary% %app.theme.neutral% %app.theme.dark% h-full"
-	>
-		<div
-			id="app"
-			class="flex h-full flex-col bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50 dark:[color-scheme:only_dark]"
-		>
+	<body data-sveltekit-preload-data="hover">
+		<div class="contents" making-sveltekit-happy="github.com/sveltejs/kit/discussions/7585">
 			%sveltekit.body%
 		</div>
 	</body>

@@ -2,6 +2,8 @@ navbar-skip = Skip to content
 navbar-login = Log In
 navbar-settings = Settings
 
+navbar-noscript = Logging in and certain other functionality requires JavaScript. You can still browse anonymously.
+
 postriver-item-score = Current score: {$score}
 postriver-item-upvote = { $voted -> 
     [true] Upvoted
