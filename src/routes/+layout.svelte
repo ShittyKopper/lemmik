@@ -9,17 +9,29 @@
 	import { boolEnv } from "$lib/util";
 	import { FluentProvider } from "@nubolab-ffwd/svelte-fluent";
 	import { onMount, setContext } from "svelte";
-	import { writable } from "svelte/store";
+	import { derived, writable } from "svelte/store";
 	import type { LayoutData } from "./$types";
 	import Navbar from "./Navbar.svelte";
+	import { Lemmy } from "$lib/lemmy";
 
-	export let data: LayoutData | null;
+	export let data: LayoutData;
 
 	const prefs = setContext("prefs", writable<Prefs | null>(null));
 	const accounts = setContext<AccountContext>("accounts", {
 		accounts: writable<Record<string, Account>>(),
 		currentAccount: writable<string | null>(),
 	});
+
+	const lemmy = setContext(
+		"lemmy",
+		derived([accounts.accounts, accounts.currentAccount], ([$accounts, $current]) => {
+			if ($current == null) return null;
+			if (!($current in $accounts)) return null;
+
+			const account = $accounts[$current];
+			return new Lemmy(account.instance, { token: account.jwt });
+		}),
+	);
 
 	const autoDarkMode = boolEnv(env.UI_DEFAULT_THEME_DARK_AUTO);
 
@@ -68,7 +80,7 @@
 		class="h-full min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50 dark:[color-scheme:only_dark]"
 	>
 		<FluentProvider bundles={[bundleOf(language)]}>
-			<Navbar />
+			<Navbar site={data?.site.site_view.site} />
 
 			<div
 				id="content"

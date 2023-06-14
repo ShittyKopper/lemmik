@@ -2,6 +2,9 @@
 	import { UI_BUILD_MODE } from "$env/static/public";
 	import { Localized, localize } from "@nubolab-ffwd/svelte-fluent";
 	import NavbarSection from "./NavbarSection.svelte";
+	import type { Site } from "lemmy-js-client";
+
+	export let site: Site;
 
 	let searchQuery: string;
 </script>
@@ -17,7 +20,7 @@
 	<nav
 		class="mx-auto grid h-16 w-full max-w-screen-2xl grid-cols-12 items-center gap-2 px-4 text-lg --full-width:max-w-none"
 	>
-		<NavbarSection className="text-xl col-span-3" links={{ "/": "Instance Name" }} />
+		<NavbarSection className="text-xl col-span-3" links={{ "/": site.name }} />
 		<form class="col-span-6">
 			<input
 				type="search"

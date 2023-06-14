@@ -8,12 +8,13 @@ Lemmik can run in two modes:
   requires a VPS to host. It's mainly intended for instances to install as a
   replacement for/additional choice next to the default Lemmy frontend.
 
-  This mode can additionally be "locked down" into a specific instance.
+  - This mode can additionally be "locked down" into a specific instance.
 
 - **Single page application mode**, which _requires_ JS for everything, however
   it can be hosted almost everywhere you can think of, often for free.
 
-  This mode has no logged out browsing capabilities.
+  - This mode has no logged out browsing capabilities.
+  - This mode may be limited by restrictive CORS policies.
 
 In both cases, logged in browsing _requires_ JS, simply because I do not want to
 bother with trusting anybody but the visitor's own browser with their token.
