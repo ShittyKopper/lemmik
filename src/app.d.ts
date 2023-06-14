@@ -1,3 +1,5 @@
+export type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
+
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
