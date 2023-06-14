@@ -5,18 +5,19 @@ import { mapUndef } from "$lib/util";
 import type { HandleFetch } from "@sveltejs/kit";
 import { LRUCache } from "lru-cache";
 
-interface RequestCacheKey {
-	url: string;
-}
-
-const cache = new LRUCache<RequestCacheKey, Response>({
+const cache = new LRUCache<string, Response>({
 	max: mapUndef(privateEnv.NS_LRU_CACHE_MAX, (t) => parseInt(t)) || 200,
 	ttl: mapUndef(privateEnv.NS_LRU_CACHE_TTL, (t) => parseInt(t)),
 	ttlAutopurge: true,
 });
 
-export const handleFetch = (async ({ request, fetch }) => {
+export const handleFetch = (async ({ request, fetch, event }) => {
 	if (building) throw new Error("Build attempted fetch(). Stop trying to make fetch happen.");
+
+	const clientAddr = event.getClientAddress();
+	request.headers.set("Forwarded", clientAddr);
+	request.headers.set("X-Forwarded-For", clientAddr);
+	request.headers.set("X-Real-IP", clientAddr);
 
 	if (request.url.startsWith(publicEnv.UI_DEFAULT_INSTANCE)) {
 		if (privateEnv.NS_DEFAULT_INSTANCE_SERVERSIDE != undefined) {
@@ -31,10 +32,8 @@ export const handleFetch = (async ({ request, fetch }) => {
 	}
 
 	// it helps that lemmy stuffs literally everything into url parameters.
-	const tryCache = request.method == "get" && !request.url.includes("auth");
-	const cacheKey: RequestCacheKey = {
-		url: request.url,
-	};
+	const tryCache = request.method == "GET" && !request.url.includes("auth");
+	const cacheKey = request.url;
 
 	if (tryCache) {
 		const cached = cache.get(cacheKey);
