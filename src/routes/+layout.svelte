@@ -5,7 +5,7 @@
 	import { env } from "$env/dynamic/public";
 	import { bundleOf, negotiate } from "$lib/languages/main";
 	import { loadAccounts, type Account, type AccountContext } from "$lib/stores/accounts";
-	import { loadPrefsBrowser, type Prefs } from "$lib/stores/prefs";
+	import { loadPrefs, type Prefs } from "$lib/stores/prefs";
 	import { boolEnv } from "$lib/util";
 	import { FluentProvider } from "@nubolab-ffwd/svelte-fluent";
 	import { onMount, setContext } from "svelte";
@@ -15,14 +15,13 @@
 
 	export let data: LayoutData | null;
 
-	const prefs = setContext("prefs", writable<Prefs>(data?.prefs));
+	const prefs = setContext("prefs", writable<Prefs | null>(null));
 	const accounts = setContext<AccountContext>("accounts", {
 		accounts: writable<Record<string, Account>>(),
 		currentAccount: writable<string | null>(),
 	});
 
 	const autoDarkMode = boolEnv(env.UI_DEFAULT_THEME_DARK_AUTO);
-	const fullWidth = false;
 
 	const darkModeDefault = writable(
 		autoDarkMode
@@ -33,14 +32,14 @@
 	);
 
 	onMount(() => {
+		if (!$prefs) {
+			loadPrefs(prefs);
+		}
+
 		if (autoDarkMode) {
 			window
 				.matchMedia("(prefers-color-scheme: dark)")
 				.addEventListener("change", (m) => darkModeDefault.set(m.matches));
-		}
-
-		if (!$prefs) {
-			loadPrefsBrowser(prefs);
 		}
 
 		loadAccounts(accounts.accounts, accounts.currentAccount);
@@ -51,7 +50,7 @@
 
 	$: language =
 		$prefs?.language ||
-		(browser ? negotiate(navigator.languages) : data?.current?.language || env.UI_DEFAULT_LANGUAGE);
+		(browser ? negotiate(navigator.languages) : data?.language || env.UI_DEFAULT_LANGUAGE);
 
 	$: primaryTheme = $prefs?.theme?.primary || env.UI_DEFAULT_THEME_PRIMARY;
 	$: neutralTheme = $prefs?.theme?.neutral || env.UI_DEFAULT_THEME_NEUTRAL;
@@ -61,7 +60,7 @@
 	id="app"
 	class={`--primary-${primaryTheme} --neutral-${neutralTheme}`}
 	class:--dark={darkMode}
-	class:--full-width={fullWidth}
+	class:--full-width={$prefs?.fullWidth}
 >
 	<!-- this is a separate div as the theme selectors require a parent. -->
 

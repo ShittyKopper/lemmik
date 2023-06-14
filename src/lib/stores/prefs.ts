@@ -1,11 +1,12 @@
 import { browser } from "$app/environment";
-import type { Cookies } from "@sveltejs/kit";
 import { get, type Writable } from "svelte/store";
 
 export const DEFAULT_PREFS = {
-	avatarsEnabled: true,
 	language: undefined,
 	theme: undefined,
+
+	avatarsEnabled: true,
+	fullWidth: false,
 };
 
 export const PREFS_STORAGE_KEY = "lemmik_prefs";
@@ -19,12 +20,14 @@ export interface ThemePref {
 export interface Prefs {
 	language?: string;
 	theme?: ThemePref;
+
 	avatarsEnabled?: boolean;
+	fullWidth?: boolean;
 }
 
-export function loadPrefsBrowser(store: Writable<Prefs | null>) {
-	if (!browser) throw new Error("Attempted to load in-browser prefs serverside.");
-	if (get(store) != null) throw new Error("Attempted to load in-browser preferences twice!");
+export function loadPrefs(store: Writable<Prefs | null>) {
+	if (!browser) throw new Error("Attempted to load prefs serverside.");
+	if (get(store) != null) throw new Error("Attempted to load prefs twice.");
 
 	let loading = true;
 	store.subscribe((prefs) => {
@@ -40,15 +43,4 @@ export function loadPrefsBrowser(store: Writable<Prefs | null>) {
 	}
 
 	loading = false;
-}
-
-export function loadPrefsCookie(cookies: Cookies): Prefs {
-	const prefsCookie = cookies.get(PREFS_STORAGE_KEY);
-
-	if (prefsCookie) {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-		return JSON.parse(prefsCookie);
-	} else {
-		return DEFAULT_PREFS;
-	}
 }

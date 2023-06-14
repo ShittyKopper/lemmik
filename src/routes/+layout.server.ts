@@ -1,15 +1,8 @@
-import { loadFromRequest } from "$lib/languages/main";
-import { loadPrefsCookie } from "$lib/stores/prefs";
+import { negotiateFromRequest } from "$lib/languages/main";
 import type { LayoutServerLoad } from "./$types";
 
-export const load = (({ cookies, request }) => {
-	const prefs = loadPrefsCookie(cookies);
-
+export const load = (({ request }) => {
 	return {
-		prefs,
-
-		current: {
-			language: loadFromRequest(prefs, request),
-		},
+		language: negotiateFromRequest(request),
 	};
 }) satisfies LayoutServerLoad;

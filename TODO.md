@@ -17,3 +17,4 @@
 - Misc low hanging fruit
 - Prettier UI (imo)
 - Better embeds
+- Filter out keywords
