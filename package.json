@@ -48,6 +48,7 @@
 		"dotenv": "^16.1.4",
 		"jsdom": "^22.1.0",
 		"lemmy-js-client": "github:ShittyKopper/lemmy-js-client#custom-fetch",
+		"lru-cache": "^9.1.2",
 		"markdown-it": "^13.0.1"
 	}
 }
