@@ -7,6 +7,7 @@ import postcssNesting from "postcss-nesting";
 import tailwindcss from "tailwindcss";
 import tailwindcssNesting from "tailwindcss/nesting";
 import { defineConfig } from "vite";
+import packageJson from "./package.json";
 
 export default defineConfig({
 	plugins: [svelteFluent(), sveltekit()],
@@ -15,6 +16,10 @@ export default defineConfig({
 		postcss: {
 			plugins: [tailwindcssNesting(postcssNesting), tailwindcss, autoprefixer],
 		},
+	},
+
+	define: {
+		"import.meta.env.LEMMIK_VERSION": JSON.stringify(packageJson.version),
 	},
 
 	build: {

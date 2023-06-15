@@ -4,9 +4,9 @@
 	import { browser } from "$app/environment";
 	import { env } from "$env/dynamic/public";
 	import { bundleOf, negotiate } from "$lib/languages/main";
-	import { Lemmy } from "$lib/lemmy";
+	import { Lemmy } from "$lib/lemmy/main";
 	import { loadAccounts, type Account, type AccountContext } from "$lib/stores/accounts";
-	import { loadPrefs, type Prefs } from "$lib/stores/prefs";
+	import { DEFAULT_PREFS, loadPrefs, type Prefs } from "$lib/stores/prefs";
 	import { boolEnv } from "$lib/util";
 	import { FluentProvider } from "@nubolab-ffwd/svelte-fluent";
 	import { onMount, setContext } from "svelte";
@@ -15,7 +15,7 @@
 
 	export let data: LayoutData;
 
-	const prefs = setContext("prefs", writable<Prefs | null>(null));
+	const prefs = setContext("prefs", writable<Prefs>(DEFAULT_PREFS));
 	const accounts = setContext<AccountContext>("accounts", {
 		accounts: writable<Record<string, Account>>(),
 		currentAccount: writable<string | null>(),
@@ -43,9 +43,7 @@
 	);
 
 	onMount(() => {
-		if (!$prefs) {
-			loadPrefs(prefs);
-		}
+		loadPrefs(prefs);
 
 		if (autoDarkMode) {
 			window

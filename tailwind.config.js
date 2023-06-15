@@ -27,7 +27,7 @@ export default {
 
 			warning: colors.amber,
 			error: colors.red,
-			success: colors.lime,
+			success: colors.green,
 		},
 	},
 

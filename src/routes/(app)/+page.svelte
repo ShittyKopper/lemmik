@@ -1,9 +1,22 @@
 <script lang="ts">
-	import PostRiver from "$lib/components/PostRiver.svelte";
+	import Markdown from "$lib/components/Markdown.svelte";
+	import Page from "$lib/components/app/Page.svelte";
+	import PostRiver from "$lib/components/app/PostRiver.svelte";
+	import type { PageData } from "./$types";
+
+	export let data: PageData;
 </script>
 
-<main class="lm-box col-span-9 p-0">
-	<PostRiver />
-</main>
+<Page getSiteResponse={data.site}>
+	{#await data.streaming.posts}
+		Loading...
+	{:then posts}
+		<PostRiver localSite={data.site.site_view.local_site} posts={posts.posts} />
+	{/await}
 
-<aside class="lm-box col-span-3">.</aside>
+	<article slot="sidebar" class="prose prose-sm max-w-none dark:prose-invert">
+		{#if data.site.site_view.site.sidebar}
+			<Markdown source={data.site.site_view.site.sidebar} />
+		{/if}
+	</article>
+</Page>

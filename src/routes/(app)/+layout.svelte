@@ -2,10 +2,10 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { UI_BUILD_MODE } from "$env/static/public";
+	import Navbar from "$lib/components/app/Navbar.svelte";
 	import type { AccountContext } from "$lib/stores/accounts";
-	import { getContext, onMount } from "svelte";
+	import { getContext, onMount, setContext } from "svelte";
 	import type { LayoutData } from "./$types";
-	import Navbar from "./Navbar.svelte";
 
 	export let data: LayoutData;
 

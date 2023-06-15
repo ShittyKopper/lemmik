@@ -1,5 +1,5 @@
 import { browser } from "$app/environment";
-import { get, type Writable } from "svelte/store";
+import type { Writable } from "svelte/store";
 
 export const DEFAULT_PREFS = {
 	language: undefined,
@@ -27,9 +27,8 @@ export interface Prefs {
 	icons?: boolean;
 }
 
-export function loadPrefs(store: Writable<Prefs | null>) {
+export function loadPrefs(store: Writable<Prefs>) {
 	if (!browser) throw new Error("Attempted to load prefs serverside.");
-	if (get(store) != null) throw new Error("Attempted to load prefs twice.");
 
 	let loading = true;
 	store.subscribe((prefs) => {

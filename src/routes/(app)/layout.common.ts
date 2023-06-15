@@ -1,5 +1,5 @@
 import { env } from "$env/dynamic/public";
-import { Lemmy } from "$lib/lemmy";
+import { Lemmy } from "$lib/lemmy/main";
 import type { Fetch } from "../../app";
 
 export function loadData(fetch: Fetch) {

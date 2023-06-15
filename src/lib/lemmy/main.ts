@@ -1,5 +1,5 @@
 import { browser } from "$app/environment";
-import { LemmyHttp } from "lemmy-js-client";
+import { LemmyHttp, type GetPosts } from "lemmy-js-client";
 
 const USER_AGENT = "Lemmik frontend (serverside)";
 
@@ -19,7 +19,7 @@ export class Lemmy {
 		instance: string,
 		options: {
 			token?: string;
-			fetch?: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
+			fetch?: typeof fetch;
 		},
 	) {
 		this.http = new LemmyHttp(instance, browser ? {} : { "user-agent": USER_AGENT }, options.fetch);
@@ -35,5 +35,9 @@ export class Lemmy {
 
 	public async getSite() {
 		return await this.http.getSite(this.auth({}));
+	}
+
+	public async getPosts(form: Authless<GetPosts>) {
+		return await this.http.getPosts(this.auth(form));
 	}
 }
