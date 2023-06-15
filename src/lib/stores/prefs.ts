@@ -1,9 +1,13 @@
 import { browser } from "$app/environment";
+import { env } from "$env/dynamic/public";
 import type { Writable } from "svelte/store";
 
-export const DEFAULT_PREFS = {
+export const DEFAULT_PREFS: Prefs = {
 	language: undefined,
-	theme: undefined,
+	theme: {
+		primary: env.UI_DEFAULT_THEME_PRIMARY,
+		neutral: env.UI_DEFAULT_THEME_NEUTRAL,
+	},
 
 	avatarsEnabled: true,
 	fullWidth: false,
@@ -20,7 +24,7 @@ export interface ThemePref {
 
 export interface Prefs {
 	language?: string;
-	theme?: ThemePref;
+	theme: ThemePref;
 
 	avatarsEnabled?: boolean;
 	fullWidth?: boolean;

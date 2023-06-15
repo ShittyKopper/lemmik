@@ -15,7 +15,7 @@
 			<slot name="sidebar" />
 		</section>
 
-		<section class="text-center text-sm text-neutral-500">
+		<section class="text-center text-sm text-neutral-500 dark:text-neutral-400">
 			<Localized
 				id="sidebar-bottom"
 				args={{

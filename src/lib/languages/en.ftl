@@ -1,3 +1,5 @@
+loading = Loading...
+
 navbar-skip = Skip to content
 navbar-login = Log In
 navbar-settings = Settings
@@ -47,3 +49,11 @@ person-moderator = Moderator
 
 community-deleted = Deleted Community
 community-icon = Icon of ${community}
+
+settings-dark = Dark Theme
+settings-avatars-enabled = Show Avatars
+settings-icons = Use Icons
+settings-full-width = Full Width
+
+settings-close = Close
+settings-reset = Reset

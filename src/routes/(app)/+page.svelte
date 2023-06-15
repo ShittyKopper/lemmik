@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Markdown from "$lib/components/Markdown.svelte";
+	import Spinner from "$lib/components/Spinner.svelte";
 	import Page from "$lib/components/app/Page.svelte";
 	import PostRiver from "$lib/components/app/PostRiver.svelte";
 	import type { PageData } from "./$types";
@@ -9,7 +10,7 @@
 
 <Page getSiteResponse={data.site}>
 	{#await data.streaming.posts}
-		Loading...
+		<Spinner />
 	{:then posts}
 		<PostRiver localSite={data.site.site_view.local_site} posts={posts.posts} />
 	{/await}

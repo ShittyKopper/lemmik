@@ -4,13 +4,13 @@
 	import MdItEmoji from "markdown-it-emoji/bare";
 	import MdItFootnote from "markdown-it-footnote";
 
-	// @ts-expect-error
+	// @ts-expect-error no typings. the package is ancient
 	import MdItHTML5Embed from "markdown-it-html5-embed";
 
-	// @ts-expect-error
+	// @ts-expect-error see above
 	import MdItSub from "markdown-it-sub";
 
-	// @ts-expect-error
+	// @ts-expect-error see above
 	import MdItSup from "markdown-it-sup";
 
 	export let source: string;

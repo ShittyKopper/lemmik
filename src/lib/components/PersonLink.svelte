@@ -34,19 +34,27 @@
 		{displayName}
 
 		{#if person.bot_account}
-			<div title={$localize("person-bot")} class="text-neutral-700">
+			<div title={$localize("person-bot")} class="text-neutral-700 dark:text-neutral-200">
 				<Icon src={CpuChip} size="20px" theme="mini" class="-mb-1 opacity-50" />
 			</div>
 		{/if}
 
 		{#if distinguish}
 			{#if person.admin}
-				<div title={$localize("person-admin")} class:text-success-700={distinguish}>
+				<div
+					title={$localize("person-admin")}
+					class:text-success-700={distinguish}
+					class:dark:text-success-300={distinguish}
+				>
 					<!-- this isn't the best icon for "admin" -->
 					<Icon src={Bolt} size="20px" theme="mini" class="-mb-1 opacity-50" />
 				</div>
 			{:else}
-				<div title={$localize("person-moderator")} class:text-success-700={distinguish}>
+				<div
+					title={$localize("person-moderator")}
+					class:text-success-700={distinguish}
+					class:dark:text-success-300={distinguish}
+				>
 					<!-- this isn't the best icon for "moderator" either -->
 					<Icon src={ShieldCheck} size="20px" theme="mini" class="-mb-1 opacity-50" />
 				</div>

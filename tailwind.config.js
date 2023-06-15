@@ -15,6 +15,7 @@ export default {
 	safelist: [
 		...THEMES.primary.map((theme) => `--primary-${theme}`),
 		...THEMES.neutral.map((theme) => `--neutral-${theme}`),
+		{ pattern: /!?(bg|border)-(slate|zinc|stone|rose|emerald|sky|purple)-[57]00/ },
 	],
 
 	darkMode: ["class", "#app.--dark"],
@@ -28,6 +29,9 @@ export default {
 			warning: colors.amber,
 			error: colors.red,
 			success: colors.green,
+
+			...Object.fromEntries(THEMES.primary.map((th) => [th, colors[th]])),
+			...Object.fromEntries(THEMES.neutral.map((th) => [th, colors[th]])),
 		},
 	},
 

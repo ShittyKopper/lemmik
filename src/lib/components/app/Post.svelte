@@ -65,7 +65,7 @@
 
 	{#if post.post.thumbnail_url}
 		<a href={post.post.url} target="_blank" aria-hidden="true" tabindex="-1">
-			<img class="h-20 w-32" src={post.post.thumbnail_url} aria-hidden="true" />
+			<img class="h-20 w-32" src={post.post.thumbnail_url} alt="Thumbnail" />
 		</a>
 	{/if}
 
@@ -73,7 +73,8 @@
 		<h1
 			class="flex flex-row items-center gap-2 text-xl text-neutral-900 dark:text-neutral-200"
 			class:opacity-70={post.read}
-			class:text-success-700={featured}
+			class:text-primary-700={featured}
+			class:dark:text-primary-300={featured}
 		>
 			{#if featured}
 				<div title={$localize("postriver-item-featured")}>
@@ -93,7 +94,12 @@
 				</div>
 			{/if}
 
-			<a href={post.post.url} target="_blank">{post.post.name}</a>
+			<a
+				href={post.post.url || `/post/${post.post.id}`}
+				target={post.post.url ? "_blank" : undefined}
+			>
+				{post.post.name}
+			</a>
 		</h1>
 
 		<span class="flex flex-row gap-2">

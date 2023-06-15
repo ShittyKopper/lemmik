@@ -21,7 +21,7 @@
 		currentAccount: writable<string | null>(),
 	});
 
-	const lemmy = setContext(
+	setContext(
 		"lemmy",
 		derived([accounts.accounts, accounts.currentAccount], ([$accounts, $current]) => {
 			if ($current == null) return null;

@@ -3,13 +3,16 @@
 	import { page } from "$app/stores";
 	import { UI_BUILD_MODE } from "$env/static/public";
 	import Navbar from "$lib/components/app/Navbar.svelte";
+	import Settings from "$lib/components/app/Settings.svelte";
 	import type { AccountContext } from "$lib/stores/accounts";
-	import { getContext, onMount, setContext } from "svelte";
+	import { getContext, onMount } from "svelte";
 	import type { LayoutData } from "./$types";
 
 	export let data: LayoutData;
 
 	const { currentAccount } = getContext<AccountContext>("accounts");
+
+	let settingsOpen = false;
 
 	onMount(async () => {
 		if (UI_BUILD_MODE == "spa") {
@@ -21,7 +24,7 @@
 </script>
 
 {#if !(UI_BUILD_MODE == "spa" && $currentAccount == null)}
-	<Navbar site={data?.site.site_view.site} />
+	<Navbar site={data?.site.site_view.site} on:settings={() => (settingsOpen = true)} />
 
 	<div
 		id="content"
@@ -30,4 +33,8 @@
 	>
 		<slot />
 	</div>
+{/if}
+
+{#if settingsOpen}
+	<Settings on:close={() => (settingsOpen = false)} />
 {/if}
